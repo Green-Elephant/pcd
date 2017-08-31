@@ -45,7 +45,7 @@ function writeFile(path, data){
     fs.writeFile(path, data,(err)=>{
       if (err) throw err;
       resolve();
-    });
+    })
   })
 }
 
