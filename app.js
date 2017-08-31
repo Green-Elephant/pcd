@@ -20,7 +20,6 @@ router
   .get('/set', async (ctx, next) => {
     const url=URL.parse(ctx.url);
     let urlInfo = decodeURIComponent(url.query);
-    urlInfo=JSON.parse(urlInfo);
     console.error(urlInfo);
     db.set(urlInfo);
 
