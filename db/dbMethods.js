@@ -29,7 +29,6 @@ db.createConnection = () => {//oldCode
 db.set = async (data) => {
   writeFile(pathToDb, `${data}`);
 };
-
 db.getAll = () => {
   return new Promise((resolve)=>{
     fs.readFile(pathToDb,'utf8', (err, data) => {
