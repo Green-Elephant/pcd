@@ -16,17 +16,14 @@ db.createConnection();
 router
   .get('/', async (ctx, next) => {
     ctx.res.writeHead(200);
+    console.error(db.getAll());
     ctx.body= await db.getAll();
     return next();
   })
   .post('/set', async (ctx, next) => {
     var data = ctx.request.body;
 
-    console.error(data);
-
     data = JSON.stringify(data);
-
-    console.error('data:', data);
 
     db.set(data);
 
