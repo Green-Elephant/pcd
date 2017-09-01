@@ -16,7 +16,7 @@ db.createConnection();
 router
   .get('/', async (ctx, next) => {
     ctx.res.writeHead(200);
-    console.error(db.getAll());
+    console.error(await db.getAll());
     ctx.body= await db.getAll();
     return next();
   })
