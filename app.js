@@ -8,6 +8,7 @@ const koa = require('koa'),
   env = process.env,
   URL=require('url'),
   Router = require('koa-router'),
+  bodyParser  = require('koa-bodyparser'),
   router = new Router();
 
 db.createConnection();
@@ -19,7 +20,9 @@ router
     return next();
   })
   .post('/set', async (ctx, next) => {
-    var data = await getBody(ctx);
+    var data = ctx.request.body;
+
+    console.error(data);
 
     db.set(data);
 
@@ -27,22 +30,9 @@ router
   })
 
 app
+  .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods());
-
-
-function getBody(ctx){
-  return new Promise(function(resolve,reject){
-    var data = '';
-    ctx.on('data', function (chunk) {
-      data += chunk;
-    })
-    ctx.on('end', function (chunk) {
-      resolve(data);
-    })
-  })
-}
-
 
 
 app.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
