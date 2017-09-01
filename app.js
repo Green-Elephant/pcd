@@ -18,22 +18,30 @@ router
     ctx.body= await db.getAll();
     return next();
   })
-  .get('/set', async (ctx, next) => {
-    ctx.res.writeHead(200);
-    const url=URL.parse(ctx.url);
-    let urlInfo = decodeURIComponent(url.query);
-    console.error(urlInfo);
+  .post('/set', async (ctx, next) => {
+    var data = await getBody(ctx);
 
-    db.set(urlInfo);
+    db.set(data);
 
-    return next();
-  });
+    ctx.body = ctx.req;
+  })
 
 app
   .use(router.routes())
   .use(router.allowedMethods());
 
 
+function getBody(ctx){
+  return new Promise(function(resolve,reject){
+    var data = '';
+    ctx.on('data', function (chunk) {
+      data += chunk;
+    })
+    ctx.on('end', function (chunk) {
+      resolve(data);
+    })
+  })
+}
 
 
 
