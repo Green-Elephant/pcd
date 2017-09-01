@@ -21,6 +21,7 @@ router
   })
   .post('/set', async (ctx, next) => {
     var data = ctx.request.body;
+    data = JSON.stringify(data);
     data = decodeURIComponent(data);
 
     console.error(data);
